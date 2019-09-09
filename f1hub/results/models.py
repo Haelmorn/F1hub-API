@@ -16,7 +16,7 @@ class Result(models.Model):
     time = models.TextField()
     milliseconds = models.TextField()
     fastestLap = models.TextField()
-    rank = models.IntegerField()
+    rank = models.TextField()
     fastestLapTime = models.TextField()
     fastestLapSpeed = models.TextField()
     statusId = models.ForeignKey('status.Status', on_delete=models.CASCADE)
