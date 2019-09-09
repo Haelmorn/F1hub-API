@@ -10,9 +10,9 @@ class ResultType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    results = graphene.List(ResultType, raceId=graphene.Int(), constructor=graphene.String(), year=graphene.Int(), round=graphene.Int(), driver = graphene.String(), limit=graphene.Int())
+    results = graphene.List(ResultType, raceId=graphene.Int(), constructor=graphene.String(), year=graphene.Int(), round=graphene.Int(), driver = graphene.String(), limit=graphene.Int(), grid=graphene.Int())
 
-    def resolve_results(self, info, raceId=None, constructor=None, year=None, round=None, driver=None, limit=999, **kwargs):
+    def resolve_results(self, info, raceId=None, constructor=None, year=None, round=None, driver=None, limit=999, grid=None, **kwargs):
         data = Result.objects.all()
         if raceId:
             data = data.filter(raceId=raceId)       
@@ -24,5 +24,7 @@ class Query(graphene.ObjectType):
             data = data.filter(raceId_id__round=round)
         if driver:
             data = data.filter(driverId_id__driverRef__icontains=driver)
+        if grid:
+            data = data.filter(grid=grid)
 
         return data[:limit]
