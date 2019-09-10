@@ -10,9 +10,12 @@ class CircuitType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    circuits = graphene.List(CircuitType, name=graphene.String())
+    circuits = graphene.List(CircuitType, name=graphene.String(), country=graphene.String())
 
-    def resolve_circuits(self, info, name=None, **kwargs):
+    def resolve_circuits(self, info, name=None, country=None, **kwargs):
+        data = Circuit.objects.all()
         if name:
-            return Circuit.objects.filter(name__icontains=name)
-        return Circuit.objects.all()
+            data = data.filter(name__icontains=name)
+        if country:
+            data = data.filter(country__icontains=country)
+        return data
