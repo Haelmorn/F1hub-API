@@ -1,5 +1,6 @@
 import graphene
 from graphene_django import DjangoObjectType
+from django.db.models import Max
 
 from .models import Constructorstanding
 
@@ -17,7 +18,7 @@ class Query(graphene.ObjectType):
         if year:
             data = data.filter(raceId_id__year=year)
         if round == "last":
-            max_value = data.filter(raceId_id__year=year).order_by('-raceId_id__round').first().field
+            max_value = data.aggregate(Max('raceId_id__round'))['raceId_id__round__max']
             data = data.filter(raceId_id__year=year).filter(raceId_id__round=str(max_value))
         elif round != "last":
             data = data.filter(raceId_id__round=round)
