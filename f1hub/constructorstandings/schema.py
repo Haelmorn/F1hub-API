@@ -10,12 +10,14 @@ class ConstructorstandingType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    constructorstandings = graphene.List(ConstructorstandingType,round = graphene.Int(), year = graphene.Int())
+    constructorstandings = graphene.List(ConstructorstandingType,round = graphene.String(), year = graphene.Int())
 
     def resolve_constructorstandings(self, info, year = None, round = None, **kwargs):
         data = Constructorstanding.objects.all()
         if year:
             data = data.filter(raceId_id__year=year)
-        if round:
+        if round == "last":
+            data = data.latest('raceId_id__round')
+        elif round != "last":
             data = data.filter(raceId_id__round=round)
         return data
