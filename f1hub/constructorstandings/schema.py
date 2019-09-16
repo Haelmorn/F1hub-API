@@ -17,7 +17,7 @@ class Query(graphene.ObjectType):
         if year:
             data = data.filter(raceId_id__year=year)
         if round == "last":
-            max_value = data.filter(raceId_id__year=year).order_by('-raceId_id__round').first()
+            max_value = data.filter(raceId_id__year=year).order_by('-raceId_id__round').first().field
             data = data.filter(raceId_id__year=year).filter(raceId_id__round=str(max_value))
         elif round != "last":
             data = data.filter(raceId_id__round=round)
