@@ -10,9 +10,9 @@ class ConstructorstandingType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    constructorstandings = graphene.List(ConstructorstandingType, year = graphene.Int())
+    constructorstandings = graphene.List(ConstructorstandingType,round = graphene.Int(), year = graphene.Int())
 
-    def resolve_constructorstandings(self, info, year = None, **kwargs):
+    def resolve_constructorstandings(self, info, year = None, round = None, **kwargs):
         data = Constructorstanding.objects.all()
         if year:
             data = data.filter(raceId_id__year=year)
