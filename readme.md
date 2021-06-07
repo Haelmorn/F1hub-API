@@ -3,6 +3,8 @@
 This app was created to provide a backend to f1-hub app.
 It is a simple Django+graphene setup, based on an existing mySQL database, which can be found at http://ergast.com/mrd/db/
 
+The API can be accessed at: https://safe-bayou-28242.herokuapp.com/graphql/
+
 ## Running 
 
 To run the server, you will need to first install all the dependencies. To do so, create and activate a python virtual environment by executing
